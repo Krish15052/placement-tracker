@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Analysis | Placement Tracker</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 16px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .welcome {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .dashboard-btn {
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: white;
+            background: #dc2626;
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ================= UPLOAD ================= */
+
+        .upload-box {
+            border: 2px dashed #93c5fd;
+            background: #eff6ff;
+            border-radius: 14px;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .upload-box h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .upload-box p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .file-wrapper {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .analyze-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* ================= ALERT ================= */
+
+        .alert {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        /* ================= RESUME INFO ================= */
+
+        .resume-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .info-label {
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            font-weight: bold;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        /* ================= SKILLS ================= */
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-size: 13px;
+            border: 1px solid #dbeafe;
+        }
+
+        .missing-skill {
+            background: #fff7ed;
+            color: #c2410c;
+            border-color: #fed7aa;
+        }
+
+        .no-skills {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= CATEGORY ================= */
+
+        .category {
+            margin-bottom: 20px;
+        }
+
+        .category:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .stat {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            background: white;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* ================= JOB PROFILE ================= */
+
+        .profile-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-weight: bold;
+        }
+
+        .profile-percentage {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #2563eb;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .profile-info {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* ================= JOB CARD ================= */
+
+        .job-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: white;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .job-title {
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .job-company {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .job-location {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .match-percentage {
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 20px;
+            white-space: nowrap;
+        }
+
+        .job-section {
+            margin-top: 15px;
+        }
+
+        .job-section-title {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .job-skills {
+            margin-top: 7px;
+        }
+
+        .view-job-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 9px 15px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .view-job-btn:hover {
+            background: #374151;
+        }
+
+        /* ================= ROADMAP ================= */
+
+        .roadmap-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .roadmap-description {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 10px;
+            color: #6b7280;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .resume-info,
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .job-header {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .upload-box {
+                padding: 25px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <a href="/dashboard" class="logo">
+        📊 Placement Tracker
+    </a>
+
+    <div class="nav-right">
+
+        <div class="welcome">
+            Welcome,
+            {{ username|default("Student", true) }}
+        </div>
+
+        <a href="/dashboard" class="dashboard-btn">
+            Dashboard
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<div class="container">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="page-header">
+
+        <h1>
+            📄 Resume Analysis
+        </h1>
+
+        <p>
+            Upload your resume to detect skills and find
+            suitable jobs in India.
+        </p>
+
+    </div>
+
+
+    <!-- ================= FLASH MESSAGES ================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- ================= UPLOAD ================= -->
+
+    <div class="card">
+
+        <h2>
+            📤 Upload Your Resume
+        </h2>
+
+        <p class="subtitle">
+            Upload your latest PDF resume. The system will
+            extract your technical skills and compare them
+            with available Indian job opportunities.
+        </p>
+
+
+        <div class="upload-box">
+
+            <div class="upload-icon">
+                📄
+            </div>
+
+            <h3>
+                Select Resume PDF
+            </h3>
+
+            <p>
+                Only PDF files are supported.
+            </p>
+
+
+            <form
+                action="/resume"
+                method="POST"
+                enctype="multipart/form-data"
+                id="resumeForm"
+            >
+
+                <div class="file-wrapper">
+
+                    <input
+                        type="file"
+                        name="resume"
+                        id="resume"
+                        accept=".pdf"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="analyze-btn"
+                        id="analyzeBtn"
+                    >
+                        🔍 Analyze Resume
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LATEST RESUME
+    ================================================== -->
+
+    {% if latest_resume %}
+
+    <div class="card">
+
+        <h2>
+            📋 Latest Resume
+        </h2>
+
+        <p class="subtitle">
+            Your most recently uploaded resume.
+        </p>
+
+
+        <div class="resume-info">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    File Name
+                </div>
+
+                <div class="info-value">
+                    {{ latest_resume.filename|default("Unknown", true) }}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Resume ID
+                </div>
+
+                <div class="info-value">
+                    #{{ latest_resume.id|default("-", true) }}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    Status
+                </div>
+
+                <div class="info-value">
+                    ✅ Analyzed
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         ANALYSIS STATISTICS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📊 Analysis Summary
+        </h2>
+
+        <p class="subtitle">
+            Overview of what was detected from your resume.
+        </p>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    🧠
+                </div>
+
+                <div class="stat-number">
+                    {{ detected_skills|length }}
+                </div>
+
+                <div class="stat-label">
+                    Skills Detected
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    💼
+                </div>
+
+                <div class="stat-number">
+                    {{ live_jobs|length }}
+                </div>
+
+                <div class="stat-label">
+                    Jobs Matched
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    🎯
+                </div>
+
+                <div class="stat-number">
+                    {{ missing_skills|length }}
+                </div>
+
+                <div class="stat-label">
+                    Skills To Improve
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         DETECTED SKILLS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🧠 Detected Skills
+        </h2>
+
+        <p class="subtitle">
+            Technical skills detected from your uploaded resume.
+        </p>
+
+
+        {% if detected_skills %}
+
+            <div class="skills-container">
+
+                {% for skill in detected_skills %}
+
+                    <span class="skill">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                No technical skills were detected.
+
+                <br><br>
+
+                Try uploading a resume containing your
+                programming languages, frameworks,
+                databases and other technical skills.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =================================================
+         CATEGORIZED SKILLS
+    ================================================== -->
+
+    {% if categorized_skills %}
+
+    <div class="card">
+
+        <h2>
+            🗂️ Skills By Category
+        </h2>
+
+        <p class="subtitle">
+            Your detected skills grouped by technical category.
+        </p>
+
+
+        {% for category, skills in categorized_skills.items() %}
+
+            <div class="category">
+
+                <div class="category-title">
+                    {{ category }}
+                </div>
+
+                <div class="skills-container">
+
+                    {% for skill in skills %}
+
+                        <span class="skill">
+                            {{ skill }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         MISSING SKILLS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🎯 Skills To Improve
+        </h2>
+
+        <p class="subtitle">
+            These skills are commonly required by the
+            recommended jobs but were not detected in your resume.
+        </p>
+
+
+        {% if missing_skills %}
+
+            <div class="skills-container">
+
+                {% for skill in missing_skills %}
+
+                    <span class="skill missing-skill">
+                        {{ skill }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                🎉 No major missing skills were detected.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =================================================
+         JOB PROFILES
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            💼 Recommended Job Profiles
+        </h2>
+
+        <p class="subtitle">
+            Job roles calculated from the available
+            India-based job opportunities.
+        </p>
+
+
+        {% if job_profiles %}
+
+            {% for profile in job_profiles %}
+
+                <div class="profile-card">
+
+                    <div class="profile-header">
+
+                        <strong class="profile-name">
+                            {{ profile.name }}
+                        </strong>
+
+                        <strong class="profile-percentage">
+                            {{ profile.percentage|default(0, true) }}%
+                        </strong>
+
+                    </div>
+
+
+                    <!--
+                        IMPORTANT:
+                        We do NOT put Jinja inside CSS width.
+                        This avoids VS Code CSS errors.
+                    -->
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            data-percentage="{{ profile.percentage|default(0, true) }}"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        {{ profile.jobs_count|default(0, true) }}
+                        job(s) matched this profile.
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No job profiles available yet.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =================================================
+         INDIA JOBS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🇮🇳 Recommended Jobs in India
+        </h2>
+
+        <p class="subtitle">
+            Only India-based job opportunities are shown.
+            Jobs are matched against your detected skills.
+        </p>
+
+
+        {% if live_jobs %}
+
+            {% for job in live_jobs[:10] %}
+
+                <div class="job-card">
+
+
+                    <div class="job-header">
+
+                        <div>
+
+                            <h3 class="job-title">
+
+                                {{ job.role|default(
+                                    "Software Developer",
+                                    true
+                                ) }}
+
+                            </h3>
+
+
+                            <div class="job-company">
+
+                                🏢
+
+                                {{ job.company|default(
+                                    "Company",
+                                    true
+                                ) }}
+
+                            </div>
+
+
+                            <div class="job-location">
+
+                                📍
+
+                                {{ job.location|default(
+                                    "India",
+                                    true
+                                ) }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="match-percentage">
+
+                            {{ job.match_percentage|default(0, true) }}%
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MATCHED SKILLS -->
+
+                    {% if job.matched %}
+
+                    <div class="job-section">
+
+                        <strong class="job-section-title">
+                            ✓ Skills You Have
+                        </strong>
+
+                        <div class="job-skills">
+
+                            {% for skill in job.matched[:6] %}
+
+                                <span class="skill">
+                                    {{ skill }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- MISSING SKILLS -->
+
+                    {% if job.missing %}
+
+                    <div class="job-section">
+
+                        <strong class="job-section-title">
+                            ⚠ Skills To Learn
+                        </strong>
+
+                        <div class="job-skills">
+
+                            {% for skill in job.missing[:6] %}
+
+                                <span class="skill missing-skill">
+                                    {{ skill }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- VIEW JOB -->
+
+                    {% if job.url and job.url != "#" %}
+
+                        <a
+                            href="{{ job.url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="view-job-btn"
+                        >
+                            View Job →
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                No India-based jobs available yet.
+
+                <br><br>
+
+                Upload your resume first so the system
+                can analyze your skills.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =================================================
+         ROADMAP
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            🛣️ Learning Roadmap
+        </h2>
+
+        <p class="subtitle">
+            Follow these steps to improve your job readiness.
+        </p>
+
+
+        {% if roadmap %}
+
+            {% for item in roadmap %}
+
+                <div class="roadmap-item">
+
+                    <strong>
+                        {{ item.step }}
+                    </strong>
+
+                    <p class="roadmap-description">
+
+                        {{ item.description }}
+
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                Upload a resume to generate your learning roadmap.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    Placement Tracker © 2026
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+    /* ================================================
+       RESUME UPLOAD VALIDATION
+    ================================================ */
+
+    const form = document.getElementById("resumeForm");
+
+    const fileInput = document.getElementById("resume");
+
+    const analyzeBtn = document.getElementById("analyzeBtn");
+
+
+    if (form) {
+
+        form.addEventListener("submit", function (event) {
+
+            if (!fileInput.files.length) {
+
+                event.preventDefault();
+
+                alert("Please select a PDF resume.");
+
+                return;
+
+            }
+
+
+            const file = fileInput.files[0];
+
+
+            if (!file.name.toLowerCase().endsWith(".pdf")) {
+
+                event.preventDefault();
+
+                alert("Only PDF files are supported.");
+
+                return;
+
+            }
+
+
+            analyzeBtn.innerHTML =
+                "⏳ Analyzing Resume...";
+
+            analyzeBtn.disabled = true;
+
+        });
+
+    }
+
+
+    /* ================================================
+       PROFILE PROGRESS BARS
+    ================================================ */
+
+    document
+        .querySelectorAll(".progress-fill")
+        .forEach(function (bar) {
+
+            const percentage =
+                parseInt(
+                    bar.getAttribute("data-percentage") || "0",
+                    10
+                );
+
+
+            const safePercentage =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        percentage
+                    )
+                );
+
+
+            bar.style.width =
+                safePercentage + "%";
+
+        });
+
+</script>
+
+
+</body>
+</html>

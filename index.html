@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Tracker | Home</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #111827;
+            color: white;
+
+            padding: 17px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: white;
+
+            padding: 9px 16px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+        }
+
+        .login-btn {
+            border: 1px solid #6b7280;
+        }
+
+        .register-btn {
+            background: #2563eb;
+        }
+
+        .login-btn:hover {
+            background: #374151;
+        }
+
+        .register-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 85px 25px 70px;
+
+            display: grid;
+
+            grid-template-columns: 1.1fr 0.9fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+
+            line-height: 1.1;
+
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #2563eb;
+        }
+
+        .hero-content p {
+            color: #6b7280;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 14px 23px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+        }
+
+        .primary-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-btn {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: white;
+
+            color: #111827;
+
+            border: 1px solid #d1d5db;
+
+            padding: 14px 23px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+        }
+
+        .secondary-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+
+        /* ================= HERO CARD ================= */
+
+        .hero-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .hero-card-title {
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-bottom: 22px;
+        }
+
+        .analysis-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 15px;
+
+            margin-bottom: 12px;
+
+            background: #f8fafc;
+
+            border-radius: 11px;
+
+            border: 1px solid #eef2f7;
+        }
+
+        .analysis-icon {
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #eff6ff;
+
+            font-size: 22px;
+        }
+
+        .analysis-text strong {
+            display: block;
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .analysis-text span {
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 20px 25px 70px;
+        }
+
+        .section-header {
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-size: 31px;
+
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: #6b7280;
+
+            font-size: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            transition: 0.2s;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+
+            border-color: #bfdbfe;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 18px;
+
+            margin-bottom: 9px;
+        }
+
+        .feature p {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= HOW IT WORKS ================= */
+
+        .how-section {
+            background: white;
+
+            border-top: 1px solid #e5e7eb;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            padding: 65px 25px;
+        }
+
+        .steps {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+        .step {
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #2563eb;
+
+            color: white;
+
+            border-radius: 50%;
+
+            font-weight: bold;
+        }
+
+        .step h3 {
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= INDIA JOBS ================= */
+
+        .india-section {
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            padding: 65px 25px;
+        }
+
+        .india-box {
+            background: #eff6ff;
+
+            border: 1px solid #bfdbfe;
+
+            border-radius: 18px;
+
+            padding: 35px;
+
+            text-align: center;
+        }
+
+        .india-box .icon {
+            font-size: 40px;
+
+            margin-bottom: 12px;
+        }
+
+        .india-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .india-box p {
+            color: #4b5563;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+            max-width: 700px;
+
+            margin: auto;
+        }
+
+
+        /* ================= CTA ================= */
+
+        .cta {
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 20px 25px 70px;
+        }
+
+        .cta-box {
+            background: #111827;
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 45px;
+
+            text-align: center;
+        }
+
+        .cta-box h2 {
+            font-size: 30px;
+
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            color: #d1d5db;
+
+            margin-bottom: 25px;
+
+            font-size: 15px;
+        }
+
+        .cta-button {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 13px 23px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            border-top: 1px solid #e5e7eb;
+
+            background: white;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+
+                padding-top: 55px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 13px;
+            }
+
+            .hero-content h1 {
+                font-size: 38px;
+            }
+
+            .hero {
+                padding: 45px 20px;
+            }
+
+            .features,
+            .india-section,
+            .cta {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-box {
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        📊 Placement Tracker
+    </a>
+
+    <div class="nav-buttons">
+
+        <a href="/login"
+           class="nav-btn login-btn">
+            Login
+        </a>
+
+        <a href="/register"
+           class="nav-btn register-btn">
+            Register
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Build Your Career
+            <span>Smarter.</span>
+        </h1>
+
+        <p>
+            Placement Tracker analyzes your resume,
+            identifies your technical skills, compares
+            them with available jobs in India, and
+            shows you the skills you need to learn.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/register"
+               class="primary-btn">
+                Get Started →
+            </a>
+
+            <a href="/login"
+               class="secondary-btn">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO CARD -->
+
+    <div class="hero-card">
+
+        <div class="hero-card-title">
+            🎯 Your Career Analysis
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-icon">
+                📄
+            </div>
+
+            <div class="analysis-text">
+
+                <strong>
+                    Resume Analysis
+                </strong>
+
+                <span>
+                    Extract your technical skills
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-icon">
+                💼
+            </div>
+
+            <div class="analysis-text">
+
+                <strong>
+                    Job Matching
+                </strong>
+
+                <span>
+                    Compare your skills with jobs
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-icon">
+                🧠
+            </div>
+
+            <div class="analysis-text">
+
+                <strong>
+                    Skill Gap
+                </strong>
+
+                <span>
+                    Discover skills you need to improve
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="analysis-item">
+
+            <div class="analysis-icon">
+                🛣️
+            </div>
+
+            <div class="analysis-text">
+
+                <strong>
+                    Learning Roadmap
+                </strong>
+
+                <span>
+                    Follow a personalized learning path
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURES
+====================================================== -->
+
+<section class="features">
+
+    <div class="section-header">
+
+        <h2>
+            Everything You Need
+        </h2>
+
+        <p>
+            One platform to understand your placement readiness.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📄
+            </div>
+
+            <h3>
+                Resume Analysis
+            </h3>
+
+            <p>
+                Upload your PDF resume and automatically
+                detect programming languages, frameworks,
+                databases, cloud technologies and other
+                technical skills.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💼
+            </div>
+
+            <h3>
+                Job Matching
+            </h3>
+
+            <p>
+                Compare your detected skills with available
+                job opportunities and see how closely your
+                profile matches each position.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🎯
+            </div>
+
+            <h3>
+                Skill Gap Detection
+            </h3>
+
+            <p>
+                Identify the skills required by jobs that
+                are currently missing from your profile.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🛣️
+            </div>
+
+            <h3>
+                Learning Roadmap
+            </h3>
+
+            <p>
+                Turn your missing skills into a practical
+                learning roadmap and track your progress.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Job Profiles
+            </h3>
+
+            <p>
+                See which career profiles your current
+                skills are suitable for, including developer,
+                data and AI-related roles.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔄
+            </div>
+
+            <h3>
+                Updated Job Data
+            </h3>
+
+            <p>
+                The system can refresh its job data so your
+                recommendations can be based on currently
+                available opportunities.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW IT WORKS
+====================================================== -->
+
+<section class="how-section">
+
+    <div class="section-header">
+
+        <h2>
+            How Placement Tracker Works
+        </h2>
+
+        <p>
+            Four simple steps to understand your job readiness.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+                Register as a student and access
+                your personal dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Upload Resume
+            </h3>
+
+            <p>
+                Upload your latest PDF resume
+                for skill extraction.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Compare Jobs
+            </h3>
+
+            <p>
+                See your matching skills and
+                missing skills for jobs.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Follow Roadmap
+            </h3>
+
+            <p>
+                Learn missing skills and track
+                your progress toward your target role.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INDIA JOBS
+====================================================== -->
+
+<section class="india-section">
+
+    <div class="india-box">
+
+        <div class="icon">
+            🇮🇳
+        </div>
+
+        <h2>
+            Jobs Focused on India
+        </h2>
+
+        <p>
+            Placement Tracker is designed for students
+            looking for career opportunities in India.
+            Job recommendations are intended to focus
+            on India-based opportunities and relevant
+            Indian locations.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+====================================================== -->
+
+<section class="cta">
+
+    <div class="cta-box">
+
+        <h2>
+            Ready to Track Your Career?
+        </h2>
+
+        <p>
+            Upload your resume, discover your skills,
+            find relevant jobs and build your roadmap.
+        </p>
+
+        <a href="/register"
+           class="cta-button">
+            Create Your Account →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    Placement Tracker © 2026
+
+</footer>
+
+
+</body>
+
+</html>

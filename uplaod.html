@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Resume | Placement Tracker</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f7fb;
+
+            color: #1f2937;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            background: #111827;
+
+            color: white;
+
+            padding: 16px 6%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .logo {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+        }
+
+
+        .welcome {
+
+            color: #d1d5db;
+
+            font-size: 14px;
+
+        }
+
+
+        .logout {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #dc2626;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+        }
+
+
+        .logout:hover {
+
+            background: #b91c1c;
+
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+
+            max-width: 900px;
+
+            margin: 45px auto;
+
+            padding: 0 20px;
+
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .page-header p {
+
+            color: #6b7280;
+
+            font-size: 15px;
+
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+
+                0 6px 20px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        /* ================= FLASH ================= */
+
+        .flash-container {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .flash {
+
+            padding: 12px 15px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .flash.success {
+
+            background: #ecfdf5;
+
+            color: #047857;
+
+            border: 1px solid #a7f3d0;
+
+        }
+
+
+        .flash.error {
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            border: 1px solid #fecaca;
+
+        }
+
+
+        /* ================= UPLOAD AREA ================= */
+
+        .upload-box {
+
+            border: 2px dashed #93c5fd;
+
+            background: #eff6ff;
+
+            border-radius: 15px;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            transition: 0.2s;
+
+        }
+
+
+        .upload-box:hover {
+
+            border-color: #2563eb;
+
+            background: #eef5ff;
+
+        }
+
+
+        .upload-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .upload-box h2 {
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .upload-box p {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ================= FILE INPUT ================= */
+
+        .file-area {
+
+            max-width: 500px;
+
+            margin: 0 auto 20px auto;
+
+        }
+
+
+        .file-area input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            background: white;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .file-area input:focus {
+
+            outline: none;
+
+            border-color: #2563eb;
+
+            box-shadow:
+
+                0 0 0 3px rgba(37, 99, 235, 0.10);
+
+        }
+
+
+        /* ================= FILE NAME ================= */
+
+        .file-name {
+
+            margin-top: 10px;
+
+            font-size: 13px;
+
+            color: #6b7280;
+
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .upload-btn {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 13px 25px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .upload-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        .upload-btn:disabled {
+
+            background: #93c5fd;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* ================= REQUIREMENTS ================= */
+
+        .requirements {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5e7eb;
+
+        }
+
+
+        .requirements h3 {
+
+            font-size: 16px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .requirements ul {
+
+            padding-left: 20px;
+
+        }
+
+
+        .requirements li {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        /* ================= INFO CARDS ================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .info-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            text-align: center;
+
+        }
+
+
+        .info-icon {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .info-card h3 {
+
+            font-size: 15px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .info-card p {
+
+            font-size: 12px;
+
+            color: #6b7280;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ================= BACK ================= */
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-top: 22px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 12px;
+
+                align-items: flex-start;
+
+            }
+
+
+            .nav-right {
+
+                width: 100%;
+
+                justify-content: space-between;
+
+            }
+
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .container {
+
+                margin-top: 30px;
+
+            }
+
+
+            .card {
+
+                padding: 20px;
+
+            }
+
+
+            .upload-box {
+
+                padding: 35px 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <a href="/dashboard" class="logo">
+            📊 Placement Tracker
+        </a>
+
+
+        <div class="nav-right">
+
+            <div class="welcome">
+
+                Welcome,
+                {{ session.get("user_name", "Student") }}
+
+            </div>
+
+
+            <a href="/logout" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <div class="container">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="page-header">
+
+            <h1>
+                📄 Upload Your Resume
+            </h1>
+
+            <p>
+                Upload your latest resume to analyze your
+                skills and discover suitable job opportunities.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= MAIN CARD ================= -->
+
+        <div class="card">
+
+
+            <!-- ================= FLASH MESSAGES ================= -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for category, message in messages %}
+
+                            <div class="flash {{ category }}">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+
+            <!-- ================= UPLOAD BOX ================= -->
+
+            <div class="upload-box">
+
+
+                <div class="upload-icon">
+                    📤
+                </div>
+
+
+                <h2>
+                    Upload Resume
+                </h2>
+
+
+                <p>
+                    Select your latest resume in PDF format.
+                </p>
+
+
+
+                <!-- ================= FORM ================= -->
+
+                <form
+                    action="/upload"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="uploadForm"
+                >
+
+
+                    <div class="file-area">
+
+                        <input
+                            type="file"
+                            name="resume"
+                            id="resume"
+                            accept=".pdf,application/pdf"
+                            required
+                        >
+
+                        <div
+                            class="file-name"
+                            id="fileName"
+                        >
+                            No file selected
+                        </div>
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="upload-btn"
+                        id="uploadButton"
+                    >
+                        Analyze Resume
+                    </button>
+
+
+                </form>
+
+            </div>
+
+
+
+            <!-- ================= REQUIREMENTS ================= -->
+
+            <div class="requirements">
+
+                <h3>
+                    📋 Resume Requirements
+                </h3>
+
+
+                <ul>
+
+                    <li>
+                        Upload your resume in PDF format.
+                    </li>
+
+                    <li>
+                        Make sure the text in your resume is selectable.
+                    </li>
+
+                    <li>
+                        Include your technical skills, projects,
+                        education and experience.
+                    </li>
+
+                    <li>
+                        The system will automatically detect
+                        technical skills from your resume.
+                    </li>
+
+                    <li>
+                        Your detected skills will be compared
+                        with available job requirements.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- ================= INFO GRID ================= -->
+
+            <div class="info-grid">
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Skill Detection
+                    </h3>
+
+                    <p>
+                        Automatically identify technical
+                        skills from your resume.
+                    </p>
+
+                </div>
+
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Job Matching
+                    </h3>
+
+                    <p>
+                        Compare your skills with available
+                        job requirements.
+                    </p>
+
+                </div>
+
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        🛣️
+                    </div>
+
+                    <h3>
+                        Learning Roadmap
+                    </h3>
+
+                    <p>
+                        Find missing skills and create a
+                        personalized learning roadmap.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= BACK ================= -->
+
+            <a
+                href="/dashboard"
+                class="back-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        Placement Tracker © 2026
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        const resumeInput =
+            document.getElementById("resume");
+
+        const fileName =
+            document.getElementById("fileName");
+
+        const uploadForm =
+            document.getElementById("uploadForm");
+
+        const uploadButton =
+            document.getElementById("uploadButton");
+
+
+        /* ================= FILE SELECTION ================= */
+
+        resumeInput.addEventListener(
+            "change",
+            function () {
+
+                if (this.files.length > 0) {
+
+                    const file =
+                        this.files[0];
+
+                    fileName.textContent =
+                        "Selected: " + file.name;
+
+                } else {
+
+                    fileName.textContent =
+                        "No file selected";
+
+                }
+
+            }
+        );
+
+
+        /* ================= FORM SUBMIT ================= */
+
+        uploadForm.addEventListener(
+            "submit",
+            function () {
+
+                if (!resumeInput.files.length) {
+
+                    return;
+
+                }
+
+
+                uploadButton.disabled = true;
+
+                uploadButton.textContent =
+                    "Uploading & Analyzing...";
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
