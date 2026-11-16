@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Placement Tracker</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f4f7fb; color: #111827; }
+        a { text-decoration: none; }
+        .navbar { background: #111827; color: white; padding: 16px 5%; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .logo { color: white; font-size: 22px; font-weight: 700; }
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .welcome { color: #d1d5db; font-size: 14px; }
+        .nav-btn { color: white; padding: 9px 14px; border-radius: 8px; font-size: 13px; background: #2563eb; }
+        .logout { background: #dc2626; }
+        .container { width: min(1200px, 94%); margin: 30px auto 60px; }
+        .hero { margin-bottom: 22px; }
+        .hero h1 { font-size: 30px; margin-bottom: 7px; }
+        .hero p { color: #64748b; }
+        .flash { padding: 12px 15px; border-radius: 9px; margin-bottom: 15px; font-size: 14px; }
+        .flash.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .flash.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px; }
+        .stat { background: white; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px; box-shadow: 0 4px 14px rgba(0,0,0,.04); }
+        .stat-icon { font-size: 28px; margin-bottom: 8px; }
+        .stat-number { font-size: 28px; font-weight: 700; }
+        .stat-label { margin-top: 5px; color: #64748b; font-size: 13px; }
+        .card { background: white; border: 1px solid #e5e7eb; border-radius: 15px; padding: 24px; margin-bottom: 22px; box-shadow: 0 4px 14px rgba(0,0,0,.04); }
+        .card h2 { font-size: 21px; margin-bottom: 7px; }
+        .subtitle { color: #64748b; font-size: 14px; margin-bottom: 18px; }
+        .upload-box { background: #eff6ff; border: 2px dashed #93c5fd; border-radius: 14px; padding: 28px; text-align: center; }
+        .upload-icon { font-size: 44px; margin-bottom: 8px; }
+        .upload-box h3 { margin-bottom: 6px; }
+        .upload-box p { color: #64748b; font-size: 13px; margin-bottom: 16px; }
+        .file-input { width: min(520px, 100%); padding: 11px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .primary-btn { border: 0; background: #2563eb; color: white; padding: 11px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 12px; }
+        .primary-btn:hover { background: #1d4ed8; }
+        .resume-info { display: flex; flex-wrap: wrap; gap: 10px; }
+        .resume-chip { background: #eff6ff; color: #1d4ed8; border-radius: 9px; padding: 10px 13px; font-size: 13px; }
+        .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; border-radius: 18px; padding: 7px 11px; font-size: 13px; }
+        .missing { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+        .category { margin-bottom: 18px; }
+        .category:last-child { margin-bottom: 0; }
+        .category-title { font-weight: 700; margin-bottom: 8px; }
+        .profile-grid, .job-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .profile, .job { border: 1px solid #e5e7eb; border-radius: 12px; padding: 18px; background: #fff; }
+        .profile-top, .job-top { display: flex; justify-content: space-between; gap: 15px; align-items: flex-start; }
+        .profile-name, .job-title { font-weight: 700; font-size: 17px; }
+        .percentage, .match { color: #2563eb; font-size: 20px; font-weight: 700; white-space: nowrap; }
+        .bar { height: 9px; background: #e5e7eb; border-radius: 20px; overflow: hidden; margin: 14px 0 10px; }
+        .bar-fill { height: 100%; width: 0; background: #2563eb; border-radius: 20px; }
+        .muted { color: #64748b; font-size: 13px; }
+        .company { margin-top: 7px; font-size: 14px; }
+        .location { margin-top: 5px; color: #64748b; font-size: 13px; }
+        .job-section-title { font-size: 12px; font-weight: 700; margin: 14px 0 7px; }
+        .source-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+        .source-link { color: white; background: #111827; padding: 8px 11px; border-radius: 7px; font-size: 12px; }
+        .source-link:hover { background: #2563eb; }
+        .source-note { margin-top: 12px; padding: 10px; background: #f8fafc; border-radius: 8px; color: #64748b; font-size: 12px; }
+        .empty { padding: 25px; text-align: center; background: #f8fafc; border-radius: 10px; color: #64748b; }
+        .roadmap-item { display: flex; gap: 12px; align-items: flex-start; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+        .roadmap-item input { width: 18px; height: 18px; margin-top: 2px; }
+        .roadmap-step { font-weight: 700; font-size: 14px; }
+        .roadmap-desc { color: #64748b; font-size: 13px; margin-top: 4px; }
+        footer { text-align: center; color: #94a3b8; font-size: 12px; padding: 25px; }
+        @media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } .profile-grid, .job-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .navbar { flex-direction: column; align-items: flex-start; } .stats { grid-template-columns: 1fr; } .container { width: 92%; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="/dashboard">📊 Placement Tracker</a>
+    <div class="nav-right">
+        <span class="welcome">Welcome, {{ username|default("Student", true) }}</span>
+        <a class="nav-btn" href="/upload">Upload Resume</a>
+        <a class="nav-btn logout" href="/logout">Logout</a>
+    </div>
+</nav>
+
+<main class="container">
+    <section class="hero">
+        <h1>Placement Dashboard</h1>
+        <p>Track your resume, skills, India job opportunities and learning roadmap in one place.</p>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="stats">
+        <div class="stat"><div class="stat-icon">📄</div><div class="stat-number">{{ resume_count|default(0, true) }}</div><div class="stat-label">Resumes Uploaded</div></div>
+        <div class="stat"><div class="stat-icon">🧠</div><div class="stat-number">{{ skill_count|default(0, true) }}</div><div class="stat-label">Skills Detected</div></div>
+        <div class="stat"><div class="stat-icon">💼</div><div class="stat-number">{{ job_count|default(0, true) }}</div><div class="stat-label">Recommended Jobs</div></div>
+        <div class="stat"><div class="stat-icon">🎯</div><div class="stat-number">{{ profile_count|default(0, true) }}</div><div class="stat-label">Job Profiles</div></div>
+    </section>
+
+    <section class="card">
+        <h2>📤 Analyze Your Resume</h2>
+        <p class="subtitle">Upload a PDF resume. Skills will be detected and matched against India-focused job opportunities.</p>
+        <div class="upload-box">
+            <div class="upload-icon">📄</div>
+            <h3>Upload Resume</h3>
+            <p>Supported format: PDF only</p>
+            <form action="/resume" method="POST" enctype="multipart/form-data" id="resumeForm">
+                <input class="file-input" type="file" name="resume" id="resumeFile" accept="application/pdf,.pdf" required>
+                <br>
+                <button class="primary-btn" id="analyzeBtn" type="submit">🔍 Analyze Resume</button>
+            </form>
+        </div>
+    </section>
+
+    {% if latest_resume %}
+    <section class="card">
+        <h2>📋 Latest Resume</h2>
+        <p class="subtitle">The latest resume saved for your account.</p>
+        <div class="resume-info">
+            <div class="resume-chip">📄 {{ latest_resume.filename|default("Unknown", true) }}</div>
+            <div class="resume-chip">ID: #{{ latest_resume.id|default("-", true) }}</div>
+            <div class="resume-chip">✅ Saved</div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="card">
+        <h2>🧠 Detected Skills</h2>
+        <p class="subtitle">Technical skills extracted from your resume.</p>
+        {% if detected_skills %}
+            <div class="skills">
+                {% for skill in detected_skills %}<span class="skill">✓ {{ skill }}</span>{% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">Upload a resume to detect skills.</div>
+        {% endif %}
+    </section>
+
+    {% if categorized_skills %}
+    <section class="card">
+        <h2>🗂️ Skills By Category</h2>
+        <p class="subtitle">Your detected skills grouped by category.</p>
+        {% for category, skills in categorized_skills.items() %}
+            <div class="category">
+                <div class="category-title">{{ category }}</div>
+                <div class="skills">
+                    {% for skill in skills %}<span class="skill">{{ skill }}</span>{% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    <section class="card">
+        <h2>🎯 Recommended Job Profiles</h2>
+        <p class="subtitle">Profiles are calculated from India job data or India job-board search links when public APIs return no postings.</p>
+        {% if job_profiles %}
+            <div class="profile-grid">
+                {% for profile in job_profiles %}
+                    {% set percentage = profile.percentage|default(0, true)|float %}
+                    <div class="profile">
+                        <div class="profile-top">
+                            <div class="profile-name">{{ profile.name|default("Job Profile", true) }}</div>
+                            <div class="percentage">{{ "%.0f"|format(percentage) }}%</div>
+                        </div>
+                        <div class="bar"><div class="bar-fill progress-fill" data-progress="{{ percentage }}"></div></div>
+                        <div class="muted">Based on {{ profile.jobs_count|default(0, true) }} India job result(s).</div>
+                        {% if profile.common_skills %}
+                            <div class="job-section-title">Commonly Required</div>
+                            <div class="skills">{% for skill in profile.common_skills[:8] %}<span class="skill">{{ skill }}</span>{% endfor %}</div>
+                        {% endif %}
+                        {% if profile.missing %}
+                            <div class="job-section-title">Skills To Improve</div>
+                            <div class="skills">{% for skill in profile.missing[:6] %}<span class="skill missing">{{ skill }}</span>{% endfor %}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">No job profiles available yet. Upload/analyze a resume first.</div>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>🇮🇳 Recommended Jobs in India</h2>
+        <p class="subtitle">Only India-focused results are shown. If live APIs return no postings, the cards below provide direct India job-board searches.</p>
+        {% if live_jobs %}
+            <div class="job-grid">
+                {% for job in live_jobs[:20] %}
+                    <article class="job">
+                        <div class="job-top">
+                            <div>
+                                <div class="job-title">{{ job.role|default(job.title, true)|default("Job Role", true) }}</div>
+                                <div class="company">🏢 {{ job.company|default("Company", true) }}</div>
+                                <div class="location">📍 {{ job.location|default("India", true) }}</div>
+                            </div>
+                            <div class="match">{{ job.match_percentage|default(job.percentage, true)|default(0, true) }}%</div>
+                        </div>
+
+                        {% if job.matched %}
+                            <div class="job-section-title">✓ Skills You Have</div>
+                            <div class="skills">{% for skill in job.matched[:7] %}<span class="skill">{{ skill }}</span>{% endfor %}</div>
+                        {% endif %}
+
+                        {% if job.missing %}
+                            <div class="job-section-title">⚠ Skills To Learn</div>
+                            <div class="skills">{% for skill in job.missing[:7] %}<span class="skill missing">{{ skill }}</span>{% endfor %}</div>
+                        {% endif %}
+
+                        {% if job.search_only %}
+                            <div class="source-note">This is a live search link, not a copied job posting. Open a source to see the current vacancies.</div>
+                        {% endif %}
+
+                        <div class="source-links">
+                            {% if job.source_links %}
+                                {% for source, link in job.source_links.items() %}
+                                    {% if link and link != "#" %}<a class="source-link" href="{{ link }}" target="_blank" rel="noopener noreferrer">{{ source }} ↗</a>{% endif %}
+                                {% endfor %}
+                            {% elif job.url and job.url != "#" %}
+                                <a class="source-link" href="{{ job.url }}" target="_blank" rel="noopener noreferrer">View Job ↗</a>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">No India job results were produced. Try refreshing the dashboard.</div>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>🎯 Skills To Improve</h2>
+        <p class="subtitle">Skills required by the recommended India job profiles but not detected in your resume.</p>
+        {% if missing_skills %}
+            <div class="skills">{% for skill in missing_skills %}<span class="skill missing">{{ skill }}</span>{% endfor %}</div>
+        {% else %}
+            <div class="empty">No missing skills detected from the current India job searches.</div>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>🛣️ Learning Roadmap</h2>
+        <p class="subtitle">Your roadmap is generated from the skills missing from the recommended India job profiles.</p>
+        {% if roadmap %}
+            {% for item in roadmap %}
+                <div class="roadmap-item">
+                    <input type="checkbox" data-job="Automatic Roadmap" data-step="{{ item.step }}" onchange="saveProgress(this)">
+                    <div>
+                        <div class="roadmap-step">{{ item.step }}</div>
+                        <div class="roadmap-desc">{{ item.description }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">Upload and analyze a resume to generate your roadmap.</div>
+        {% endif %}
+    </section>
+</main>
+
+<footer>Placement Tracker © 2026</footer>
+
+<script>
+    document.querySelectorAll('.progress-fill').forEach(function (bar) {
+        var value = parseFloat(bar.dataset.progress || '0');
+        if (isNaN(value)) value = 0;
+        value = Math.max(0, Math.min(100, value));
+        bar.style.width = value + '%';
+    });
+
+    var form = document.getElementById('resumeForm');
+    var fileInput = document.getElementById('resumeFile');
+    var button = document.getElementById('analyzeBtn');
+
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            if (!fileInput.files.length) {
+                event.preventDefault();
+                alert('Please select a PDF resume.');
+                return;
+            }
+            var file = fileInput.files[0];
+            if (!file.name.toLowerCase().endsWith('.pdf')) {
+                event.preventDefault();
+                alert('Only PDF files are supported.');
+                return;
+            }
+            button.textContent = '⏳ Analyzing Resume...';
+            button.disabled = true;
+        });
+    }
+
+    function saveProgress(checkbox) {
+        fetch('/save-progress', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                job: checkbox.dataset.job,
+                step: checkbox.dataset.step,
+                completed: checkbox.checked
+            })
+        })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+            if (!data.success) console.error('Progress save failed:', data.message);
+        })
+        .catch(function (error) { console.error('Progress error:', error); });
+    }
+</script>
+</body>
+</html>
