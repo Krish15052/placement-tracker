@@ -52,23 +52,20 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # =========================================================
 # DATABASE
 # =========================================================
+# DATABASE CONFIGURATION
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": os.environ.get(
-        "DB_PASSWORD",
-        "krish@12"
-    ),
-    "database": "placement_tracker"
+    "host": os.environ.get("DB_HOST"),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD"),
+    "database": os.environ.get("DB_NAME"),
+    "port": int(os.environ.get("DB_PORT", "3306")),
+    "connection_timeout": 10
 }
 
-
 def get_db():
-
-    return mysql.connector.connect(
-        **DB_CONFIG
-    )
+    return mysql.connector.connect(**DB_CONFIG)
+    
 
 
 # =========================================================
